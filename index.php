@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Image Creator</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body{
+font-family: Arial;
+padding:20px;
+background:#111827;
+color:white;
+}
+
+input,button{
+padding:10px;
+margin-top:10px;
+width:100%;
+border-radius:8px;
+border:none;
+}
+
+button{
+background:#3b82f6;
+color:white;
+cursor:pointer;
+}
+
+img{
+margin-top:20px;
+width:100%;
+border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>AI Image Generator</h2>
+
+<input id="prompt" placeholder="Describe your image">
+
+<button onclick="generate()">Generate</button>
+
+<img id="result"/>
+
+<script>
+
+async function generate(){
+
+let prompt = document.getElementById("prompt").value
+
+let res = await fetch(
+"http://127.0.0.1:8000/generate?prompt="+prompt
+)
+
+let data = await res.json()
+
+document.getElementById("result").src = data.image
+
+}
+
+</script>
+
+</body>
+</html>
