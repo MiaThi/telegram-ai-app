@@ -3,8 +3,8 @@ import requests
 
 app = FastAPI()
 
-BOT_TOKEN = "8695580745:AAHoG4FbRMjRix7-MkRDo-eJqyWMS13j8Xg"
-TELEGRAM_API = f"https://api.telegram.org/bot{8695580745:AAHoG4FbRMjRix7-MkRDo-eJqyWMS13j8Xg}"
+BOT_TOKEN = "T8695580745:AAHoG4FbRMjRix7-MkRDo-eJqyWMS13j8Xg"
+TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 @app.get("/")
 def home():
