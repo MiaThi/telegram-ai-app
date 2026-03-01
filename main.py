@@ -1,21 +1,28 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Request
+import requests
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+BOT_TOKEN = "8695580745:AAHoG4FbRMjRix7-MkRDo-eJqyWMS13j8Xg"
+TELEGRAM_API = f"https://api.telegram.org/bot{8695580745:AAHoG4FbRMjRix7-MkRDo-eJqyWMS13j8Xg}"
 
 @app.get("/")
 def home():
-    return {"message": "AI server running"}
+    return {"message": "Telegram AI Bot Running"}
 
-@app.get("/generate")
-def generate(prompt: str):
-    return {
-        "image": "https://picsum.photos/500"
-    }
+@app.post("/webhook")
+async def webhook(req: Request):
+    data = await req.json()
+
+    if "message" in data:
+        chat_id = data["message"]["chat"]["id"]
+        text = data["message"].get("text", "")
+
+        reply = "Bạn vừa gửi: " + text
+
+        requests.post(
+            f"{TELEGRAM_API}/sendMessage",
+            json={"chat_id": chat_id, "text": reply}
+        )
+
+    return {"ok": True}
